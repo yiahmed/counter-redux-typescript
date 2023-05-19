@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { Counter } from "@/components/shared/features/counter/Counter";
 
 const Home = () => {
   return (
@@ -12,7 +13,7 @@ const Home = () => {
           width={300}
           height={100}
         />
-        {/* <Counter /> */}
+        <Counter />
         <p >
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
