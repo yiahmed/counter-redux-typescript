@@ -1,24 +1,11 @@
-import React from "react";
-import Image from "next/image";
-import { Counter } from "@/components/shared/features/counter/Counter";
+import React from 'react'
 
-const Home = () => {
+type Props = {}
+
+const Home = (props: Props) => {
   return (
-    <div className="App text-black">
-      <header className="App-header flex flex-col justify-center items-center">
-        <div className="animate-float">
-          <Image
-            src={`${process.env.PUBLIC_URL ?? ""}/logo.svg`}
-            className="App-logo py-7"
-            alt="logo"
-            width={300}
-            height={100}
-          />
-        </div>
-        <Counter />
-      </header>
-    </div>
-  );
-};
+    <div className='text-black'>Home</div>
+  )
+}
 
-export default Home;
+export default Home
