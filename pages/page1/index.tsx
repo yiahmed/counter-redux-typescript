@@ -1,11 +1,12 @@
-import React from 'react'
+import axios from "axios";
+import PlayerData from "@/components/shared/features/api-calls-components/playerData";
+const Page1 = () => {
 
-type Props = {}
-
-const Page1 = (props: Props) => {
   return (
-    <div>Page1</div>
-  )
-}
+    <div className="text-black">
+      <PlayerData/>
+    </div>
+  );
+};
 
-export default Page1
+export default Page1;
