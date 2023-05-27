@@ -61,7 +61,7 @@ const PlayerData = () => {
     };
     
     axios.request(options).then(function (response) {
-      console.log(response.data);
+      console.log(response.data.data);
       setPlayers(response.data.data)
     }).catch(function (error) {
       console.error(error);

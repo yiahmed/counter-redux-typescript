@@ -86,12 +86,16 @@ WAS: '#002B5C'
       return <li className="my-4">HEIGHT: N/A</li>;
     }
   };
+  const teamAbbreviation = player?.team.abbreviation
+  const backgroundColor = teamColor[teamAbbreviation]
 
   return (
     <div className="flex items-center justify-center w-full h-full">
       {player && (
         <div className="flex flex-col w-1/2 border-2 rounded-md shadow-md h-1/2">
-        <div className="flex items-center justify-center text-lg font-bold text-white bg-black border-b rounded-t-md h-1/5">
+        <div style={{
+          backgroundColor 
+        }}className="flex items-center justify-center text-lg font-bold text-white border-b rounded-t-md h-1/5">
           {player.first_name + ' ' + player.last_name}
         </div>
         <div>
