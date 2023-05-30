@@ -10,7 +10,6 @@ const Home = (props: Props) => {
   return (
     <div className='text-black'>
       Home
-      <PostSeasonPlayers/>
     </div>
   );
 };

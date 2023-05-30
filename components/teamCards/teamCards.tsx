@@ -79,7 +79,7 @@ const teamLogos = {
     id: 5
   },
   CLE: {
-    logo: "https://upload.wikimedia.org/wikipedia/en/4/4b/Cleveland_Cavaliers_logo.svg",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Cleveland_Cavaliers_secondary_logo.svg/2373px-Cleveland_Cavaliers_secondary_logo.svg.png",
     color: "#860038",
     team_full_name: "Cleveland Cavaliers",
     id: 6
@@ -139,7 +139,7 @@ const teamLogos = {
     id: 15
   },
   MIA: {
-    "#98002E": "#98002E",
+    color: "#98002E",
     team_full_name: "Miami Heat",
     logo: "https://upload.wikimedia.org/wikipedia/en/f/fb/Miami_Heat_logo.svg",
     id: 16
@@ -297,6 +297,7 @@ const TeamCards = () => {
   }, [games]); //[games] array is provided as the second argument. By doing this, you're telling React that the effect should run whenever the games state changes
   console.log(teamsArray);
 
+
   return (
     <Grid container spacing={3} justifyContent="center">
       {teamsArray.map((team: string, index: number) => {
@@ -307,26 +308,26 @@ const TeamCards = () => {
 
         if (!teamObj) return null; // Skip if team object is not found
 
-        const { logo } = teamObj;
+        const { logo, color } = teamObj;
 
         // Get the players for the current team
         const teamPlayers = playersByTeam[teamObj.id] || [];
 
         return (
           <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card /*sx={{ maxWidth: 345, display: "flex", flexDirection: "column" }}*/ className="flex flex-col max-h-80">
-              <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <Card className="flex flex-col max-h-80">
+              <Box sx={{ display: "flex", flexDirection: "row", backgroundColor: color }} className=" h-auto">
                 <CardContent sx={{ flex: 1 }}>
-                  <Typography component="div" variant="h5">
+                  <Typography component="div" variant="h5" className="text-white font-bold rounded-md">
                     {team}
                   </Typography>
                 </CardContent>
                 <CardMedia
-                  component="img"
-                  className="h-1/5 w-1/4"
-                  image={logo}
-                  alt="Team Logo"
-                />
+          component="img"
+          className="h-1/2 w-20 object-cover p-1"
+          image={logo}
+          alt="Team Logo"
+        />
               </Box>
 
               <div className="flex-1 overflow-y-auto">
