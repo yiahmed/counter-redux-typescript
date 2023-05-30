@@ -129,9 +129,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   console.log("redux", playersFromRedux);
 
   return (
-    <div className="h-screen w-screen">
+    <div className="h-screen w-screen bg-white">
       <Navbar />
-      <main className="bg-white w-screen h-screen">{children}</main>
+      <main style={{height: "92%",
+      overflow: "auto"}}>{children}</main>
     </div>
   );
 }
