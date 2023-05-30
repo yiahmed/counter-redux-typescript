@@ -1,8 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../../store";
 
+type PlayerData = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  position: string;
+  team_id: number;
+};
 export interface PlayersState {
-  players: any[];
+  players: PlayerData[];
   status: "idle" | "loading" | "failed";
 }
 
@@ -16,7 +23,7 @@ export const playersSlice = createSlice({
   initialState,
   reducers: {
     addPlayers: (state, action: PayloadAction<PlayerData[]>) => {
-      state.players = action.payload;
+      state.players = [...action.payload];
     },
   },
 });
