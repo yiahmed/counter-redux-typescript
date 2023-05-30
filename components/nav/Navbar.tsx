@@ -18,7 +18,7 @@ const Navbar = (props: Props) => {
           Page1
         </Button>
         <Button variant="outlined" href={"/page2"}>
-          Page2
+          NBA Postseason 22/23
         </Button>
       </div>
     </div>

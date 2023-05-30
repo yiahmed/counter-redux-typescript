@@ -4,7 +4,7 @@ const Page1 = () => {
 
   return (
     <div className="text-black">
-      <PlayerData/>
+      Page 1
     </div>
   );
 };
