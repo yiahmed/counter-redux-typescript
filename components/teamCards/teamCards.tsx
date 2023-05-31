@@ -12,6 +12,15 @@ import {
   Typography,
 } from "@mui/material";
 
+import {Fjalla_One} from '@next/font/google'
+
+const fjalla_one = Fjalla_One({
+  subsets:['latin'],
+  weight:['400']
+})
+
+console.log('team card',fjalla_one)
+
 interface Game {
   id: number;
   date: string;
@@ -61,7 +70,7 @@ const teamLogos = {
     id: 2
   },
   BKN: {
-    logo: "https://upload.wikimedia.org/wikipedia/commons/4/44/Brooklyn_Nets_newlogo.svg",
+    logo: "https://patch.com/img/cdn/users/68453/2012/05/raw/842b4607fd503508899d7e15b062a4d5.jpg",
     color: "#000000",
     team_full_name: "Brooklyn Nets",
     id: 3
@@ -299,7 +308,7 @@ const TeamCards = () => {
 
 
   return (
-    <Grid container spacing={3} justifyContent="center">
+    <Grid container spacing={3} sx={{justifyContent:"center", padding:"2rem"}}>
       {teamsArray.map((team: string, index: number) => {
         // Get the team object from the teamLogos using the team name
         const teamObj = Object.values(teamLogos).find(
@@ -316,25 +325,28 @@ const TeamCards = () => {
         return (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <Card className="flex flex-col max-h-80">
-              <Box sx={{ display: "flex", flexDirection: "row", backgroundColor: color }} className=" h-auto">
+              <Box sx={{ display: "flex", alignItems:"center", flexDirection: "row", backgroundColor: color, minHeight:"6rem", paddingLeft:"1rem",paddingRight:"1rem" }} className="h-auto">
                 <CardContent sx={{ flex: 1 }}>
-                  <Typography component="div" variant="h5" className="text-white font-bold rounded-md">
-                    {team}
+                  <Typography component="div" variant="h4" className={`text-white font-bold rounded-md ${fjalla_one.className}`}>
+                    {team.toUpperCase()}
                   </Typography>
                 </CardContent>
                 <CardMedia
-          component="img"
-          className="h-1/2 w-20 object-cover p-1"
-          image={logo}
-          alt="Team Logo"
-        />
+                  component="img"
+                  className="h-20 w-20 object-fill p-1"
+                  image={logo}
+                  alt="Team Logo"
+                />
               </Box>
 
               <div className="flex-1 overflow-y-auto">
               {teamPlayers.map((player: PlayerData) => (
                 <Typography component="div" key={player.id}>
                   <Link href={`/page2/${player.id}`} key={index}>
-                  {player.first_name} {player.last_name}
+                    <Card sx={{display:"flex", borderRadius:0}}>
+                      <CardContent sx={{minWidth: "4rem", color:"#AAAAAA" , fontFamily: fjalla_one.style.fontFamily}} >{player.position}</CardContent>
+                      <CardContent>{player.first_name} {player.last_name}</CardContent>
+                    </Card>
                   </Link>
                 </Typography>
               ))}
