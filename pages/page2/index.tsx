@@ -9,5 +9,5 @@ const Page2 = (props: Props) => {
     <div><TeamCards/></div>
   )
 }
-//let's go NBA test 2
+//let's go NBA test 3
 export default Page2
