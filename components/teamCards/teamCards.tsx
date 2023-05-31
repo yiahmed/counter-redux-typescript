@@ -333,9 +333,7 @@ const TeamCards = () => {
               <div className="flex-1 overflow-y-auto">
               {teamPlayers.map((player: PlayerData) => (
                 <Typography component="div" key={player.id}>
-                  <Link href={`/page2/${player.id}`} key={index}>
                   {player.first_name} {player.last_name}
-                  </Link>
                 </Typography>
               ))}
             </div>

@@ -158,10 +158,10 @@ WAS: '#002B5C'
               TEAM: {player.team?.abbreviation ?? 'N/A'}
             </li>
             <li>
-                Points Per Game: {averagePts}
+                {/* Points Per Game: {averagePts} */}
             </li>
             <li>
-                Games Played: {totalGames}
+                {/* Games Played: {totalGames} */}
             </li>
           </ul>
         </div>
