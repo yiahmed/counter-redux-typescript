@@ -9,7 +9,7 @@ const Navbar = (props: Props) => {
     <div className="w-full bg-white border-2 shadow-md flex justify-center items-center">
       <div className="py-2 space-x-5">
         <Button variant="outlined" href={"/"}>
-          Home
+          Homey
         </Button>
         <Button variant="outlined" href="/counter">
           Counter
