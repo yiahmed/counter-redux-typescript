@@ -371,12 +371,12 @@ const TeamCards = () => {
         return (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <Card className="flex flex-col max-h-80">
-              <div className="flex items-center justify-end" style={{ backgroundColor: color }}>
-                <CardContent className="flex-1">
+              <div className="flex items-center justify-end p-2" style={{ backgroundColor: color }}>
+                <CardContent sx={{padding:"10px"}}className="flex-1">
                   <Typography component="div" variant="h4" className={`text-white font-bold rounded-md ${fjalla_one.className}`}>
                     {team.toUpperCase()}
                   </Typography>
-                  <Typography component="div" variant="h8" className={`text-white font-bold rounded-md ${fjalla_one.className}`}>
+                  <Typography component="div" className={`text-white font-bold rounded-md ${fjalla_one.className}`}>
                     ({teamRecord.wins} - {teamRecord.losses})
                   </Typography>
                 </CardContent>
