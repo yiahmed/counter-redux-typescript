@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Card } from "@mui/material";
 import { useRouter } from "next/router";
+import { useAppSelector } from "@/hooks";
 
 type IndividualPlayer = {
   teamLogo: string | undefined;
@@ -55,6 +56,9 @@ const Index = () => {
   const [averageAst, setAverageAst] = useState<number>(0);
   const [averageReb, setAverageReb] = useState<number>(0);
   const [totalGames, setTotalGames] = useState<number>(0);
+  const teamInfoFromRedux = useAppSelector(
+    (state) => state.teamInfo.teamInfo[0]
+  );
   const router = useRouter();
   const { playerId } = router.query;
   const teamColor = {
@@ -115,7 +119,7 @@ const Index = () => {
           `https://www.balldontlie.io/api/v1/stats?per_page=100&postseason=true&seasons[]=2022&player_ids[]=${playerId}`
         );
         const playerStats: PlayerStats[] = response.data.data;
-        console.log(response.data)
+        console.log(response.data);
         const filteredStats = playerStats.filter(
           (stat) => stat.pts !== 0 || stat.reb !== 0 || stat.ast !== 0
         );
@@ -126,8 +130,8 @@ const Index = () => {
         const averageAssists = totalAst / filteredStats.length;
         const averageRebounds = totalReb / filteredStats.length;
         setAveragePts(Math.round(averagePoints * 10) / 10);
-        setAverageAst(Math.round(averageAssists * 10) / 10)
-        setAverageReb(Math.round(averageRebounds * 10) / 10)
+        setAverageAst(Math.round(averageAssists * 10) / 10);
+        setAverageReb(Math.round(averageRebounds * 10) / 10);
         setTotalGames(filteredStats.length);
         console.log("Average Points per Game:", averagePoints);
         console.log("Total Games Played:", filteredStats.length);
@@ -151,7 +155,6 @@ const Index = () => {
     }
   };
   const teamAbbreviation = player?.team.abbreviation;
-  // console.log("logo", player?.team);
 
   const gradientColor = `linear-gradient(to bottom, ${teamColor[teamAbbreviation]} 0%, rgba(0, 0, 0, 0) 130%)`;
 
@@ -162,7 +165,7 @@ const Index = () => {
           className="flex flex-col w-1/2 border-2 rounded-xl shadow-2xl h-1/2"
           style={{ background: gradientColor }}
         >
-          <div className="flex items-center justify-center text-xl font-bold text-white border-b rounded-xl h-1/5 px-5 py-10">
+          <div className="flex items-center justify-center text-xl font-bold  text-white  border-b rounded-xl h-1/5 px-5 py-10 ">
             {player.first_name + " " + player.last_name}
             {player.team && (
               <img
@@ -173,24 +176,16 @@ const Index = () => {
             )}
           </div>
           <div style={{ background: gradientColor }}>
-            <ul className="p-4 text-lg italic text-white justify-center items-center flex-col flex">
+            <ul className="p-4 text-lg fjalla text-white  justify-center items-center flex-col flex">
               {showHeight()}
-              <li className="my-4">POSITION: {player.position ?? 'N/A'}</li>
-            <li className="my-4">
-              TEAM: {player.team?.abbreviation ?? 'N/A'}
-            </li>
-            <li>
-                Points Per Game: {averagePts}
-            </li>
-            <li>
-                Assists Per Game: {averageAst}
-            </li>
-            <li>
-                Rebounds Per Game: {averageReb}
-            </li>
-            <li>
-                Games Played: {totalGames}
-            </li>
+              <li className="my-4">POSITION: {player.position ?? "N/A"}</li>
+              <li className="my-4">
+                TEAM: {player.team?.abbreviation ?? "N/A"}
+              </li>
+              <li>Points Per Game: {averagePts}</li>
+              <li>Assists Per Game: {averageAst}</li>
+              <li>Rebounds Per Game: {averageReb}</li>
+              <li>Games Played: {totalGames}</li>
             </ul>
           </div>
         </div>
