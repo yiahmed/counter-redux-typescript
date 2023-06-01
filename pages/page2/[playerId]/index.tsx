@@ -52,6 +52,8 @@ type PlayerStats = {
 const Index = () => {
   const [player, setPlayer] = useState<IndividualPlayer | null>(null);
   const [averagePts, setAveragePts] = useState<number>(0);
+  const [averageAst, setAverageAst] = useState<number>(0);
+  const [averageReb, setAverageReb] = useState<number>(0);
   const [totalGames, setTotalGames] = useState<number>(0);
   const router = useRouter();
   const { playerId } = router.query;
@@ -110,17 +112,24 @@ const Index = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://www.balldontlie.io/api/v1/stats?player_ids[]=237&per_page=82&seasons[]=2022"
+          `https://www.balldontlie.io/api/v1/stats?per_page=100&postseason=true&seasons[]=2022&player_ids[]=${playerId}`
         );
         const playerStats: PlayerStats[] = response.data.data;
+        console.log(response.data)
         const filteredStats = playerStats.filter(
           (stat) => stat.pts !== 0 || stat.reb !== 0 || stat.ast !== 0
         );
         const totalPts = filteredStats.reduce((sum, stat) => sum + stat.pts, 0);
-        const average = totalPts / filteredStats.length;
-        setAveragePts(average);
+        const totalAst = filteredStats.reduce((sum, stat) => sum + stat.ast, 0);
+        const totalReb = filteredStats.reduce((sum, stat) => sum + stat.reb, 0);
+        const averagePoints = totalPts / filteredStats.length;
+        const averageAssists = totalAst / filteredStats.length;
+        const averageRebounds = totalReb / filteredStats.length;
+        setAveragePts(Math.round(averagePoints * 10) / 10);
+        setAverageAst(Math.round(averageAssists * 10) / 10)
+        setAverageReb(Math.round(averageRebounds * 10) / 10)
         setTotalGames(filteredStats.length);
-        console.log("Average Points per Game:", average);
+        console.log("Average Points per Game:", averagePoints);
         console.log("Total Games Played:", filteredStats.length);
       } catch (error) {
         console.log(error);
@@ -166,12 +175,22 @@ const Index = () => {
           <div style={{ background: gradientColor }}>
             <ul className="p-4 text-lg italic text-white justify-center items-center flex-col flex">
               {showHeight()}
-              <li className="my-4">POSITION: {player.position ?? "N/A"}</li>
-              <li className="my-4">
-                TEAM: {player.team?.abbreviation ?? "N/A"}
-              </li>
-              <li>Points Per Game: {averagePts}</li>
-              <li>Games Played: {totalGames}</li>
+              <li className="my-4">POSITION: {player.position ?? 'N/A'}</li>
+            <li className="my-4">
+              TEAM: {player.team?.abbreviation ?? 'N/A'}
+            </li>
+            <li>
+                Points Per Game: {averagePts}
+            </li>
+            <li>
+                Assists Per Game: {averageAst}
+            </li>
+            <li>
+                Rebounds Per Game: {averageReb}
+            </li>
+            <li>
+                Games Played: {totalGames}
+            </li>
             </ul>
           </div>
         </div>

@@ -12,6 +12,15 @@ import {
   Typography,
 } from "@mui/material";
 
+import {Fjalla_One} from '@next/font/google'
+
+const fjalla_one = Fjalla_One({
+  subsets:['latin'],
+  weight:['400']
+})
+
+console.log('team card',fjalla_one)
+
 interface Game {
   id: number;
   date: string;
@@ -61,7 +70,7 @@ const teamLogos = {
     id: 2
   },
   BKN: {
-    logo: "https://upload.wikimedia.org/wikipedia/commons/4/44/Brooklyn_Nets_newlogo.svg",
+    logo: "https://patch.com/img/cdn/users/68453/2012/05/raw/842b4607fd503508899d7e15b062a4d5.jpg",
     color: "#000000",
     team_full_name: "Brooklyn Nets",
     id: 3
@@ -239,6 +248,7 @@ const getTeamLogo = (teamName: string) => {
 const TeamCards = () => {
   const [games, setGames] = useState<Game[] | null>(null); //????a game array or NULL, start w/ null
   const [teamsArray, setTeamsArray] = useState<string[]>([]);
+  const [teamRecords, setTeamRecords] = useState<{ [key: string]: { wins: number; losses: number } }>({});
   const playersFromRedux = useAppSelector((state) => state.players.players);
   const playersByTeam: { [key: number]: PlayerData[] } = {};
   playersFromRedux.forEach((player: PlayerData) => {
@@ -250,6 +260,45 @@ const TeamCards = () => {
       playersByTeam[team_id] = [player];
     }
   });
+
+  const calculateTeamRecords = () => {
+    const newTeamRecords: { [key: string]: { wins: number; losses: number } } = {};
+
+    if (games) {
+      games.forEach((game: Game) => {
+        const { home_team_score, visitor_team_score, home_team, visitor_team } = game;
+
+        // Determine the winner and loser
+        let winner, loser;
+        if (home_team_score > visitor_team_score) {
+          winner = home_team.full_name;
+          loser = visitor_team.full_name;
+        } else if (home_team_score < visitor_team_score) {
+          winner = visitor_team.full_name;
+          loser = home_team.full_name;
+        } else {
+          return; // Skip this game if it's a tie
+        }
+
+        // Update winner's record
+        if (!newTeamRecords[winner]) {
+          newTeamRecords[winner] = { wins: 1, losses: 0 };
+        } else {
+          newTeamRecords[winner].wins += 1;
+        }
+
+        // Update loser's record
+        if (!newTeamRecords[loser]) {
+          newTeamRecords[loser] = { wins: 0, losses: 1 };
+        } else {
+          newTeamRecords[loser].losses += 1;
+        }
+      });
+    }
+
+    setTeamRecords(newTeamRecords);
+  };
+
   useEffect(() => {
     const fetchGameData = async () => {
       try {
@@ -295,56 +344,64 @@ const TeamCards = () => {
       setTeamsArray(uniqueTeams);
     }
   }, [games]); //[games] array is provided as the second argument. By doing this, you're telling React that the effect should run whenever the games state changes
-  console.log(teamsArray);
+
+  useEffect(() => {
+    calculateTeamRecords();
+  }, [games]);
+
 
 
   return (
-    <Grid container spacing={3} justifyContent="center">
+    <Grid container spacing={3} sx={{ justifyContent: "center", padding: "2rem" }}>
       {teamsArray.map((team: string, index: number) => {
         // Get the team object from the teamLogos using the team name
         const teamObj = Object.values(teamLogos).find(
           (teamData) => teamData.team_full_name === team
         );
-
+  
         if (!teamObj) return null; // Skip if team object is not found
-
+  
         const { logo, color } = teamObj;
-
+  
         // Get the players for the current team
         const teamPlayers = playersByTeam[teamObj.id] || [];
-
+  
+        const teamRecord = teamRecords[team] || { wins: 0, losses: 0 };
+  
         return (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <Card className="flex flex-col max-h-80">
-              <Box sx={{ display: "flex", flexDirection: "row", backgroundColor: color }} className=" h-auto">
-                <CardContent sx={{ flex: 1 }}>
-                  <Typography component="div" variant="h5" className="text-white font-bold rounded-md">
-                    {team}
+              <div className="flex items-center justify-end p-2" style={{ backgroundColor: color }}>
+                <CardContent sx={{padding:"10px"}}className="flex-1">
+                  <Typography component="div" variant="h4" className={`text-white font-bold rounded-md ${fjalla_one.className}`}>
+                    {team.toUpperCase()}
+                  </Typography>
+                  <Typography component="div" className={`text-white font-bold rounded-md ${fjalla_one.className}`}>
+                    ({teamRecord.wins} - {teamRecord.losses})
                   </Typography>
                 </CardContent>
-                <CardMedia
-          component="img"
-          className="h-1/2 w-20 object-cover p-1"
-          image={logo}
-          alt="Team Logo"
-        />
-              </Box>
-
+                <CardMedia component="img" className="h-20 w-20 object-fill p-1" image={logo} alt="Team Logo" />
+              </div>
+  
               <div className="flex-1 overflow-y-auto">
-              {teamPlayers.map((player: PlayerData) => (
-                <Typography component="div" key={player.id}>
-                  <Link href={`/page2/${player.id}`} key={index}>
-                  {player.first_name} {player.last_name}
-                  </Link>
-                </Typography>
-              ))}
-            </div>
+                {teamPlayers.map((player: PlayerData) => (
+                  <Typography component="div" key={player.id}>
+                    <Link href={`/page2/${player.id}`} key={index}>
+                      <Card sx={{ display: "flex", borderRadius: 0 }}>
+                        <CardContent sx={{ minWidth: "4rem", color: "#AAAAAA", fontFamily: fjalla_one.style.fontFamily }}>{player.position}</CardContent>
+                        <CardContent>{player.first_name} {player.last_name}</CardContent>
+                      </Card>
+                    </Link>
+                  </Typography>
+                ))}
+              </div>
             </Card>
           </Grid>
         );
       })}
     </Grid>
   );
+  
 };
 
 export default TeamCards;
