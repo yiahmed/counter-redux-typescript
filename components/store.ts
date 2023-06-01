@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import counterReducer from "./shared/features/counter/counterSlice";
 import playersReducer from "./shared/features/players/playerSlice";
+import teamInfoReducer from "./shared/features/teams/teamInfoSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     players: playersReducer,
+    teamInfo: teamInfoReducer,
   },
 });
 
