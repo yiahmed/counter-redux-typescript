@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Card } from '@mui/material';
-import { useRouter } from 'next/router';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Card } from "@mui/material";
+import { useRouter } from "next/router";
 
 type IndividualPlayer = {
+  teamLogo: string | undefined;
   id: number;
   first_name: string;
   last_name: string;
@@ -19,34 +20,34 @@ type IndividualPlayer = {
     division: string;
     full_name: string;
     name: string;
+    logo: string;
   };
 };
 
 type PlayerStats = {
-    games_played: number;
-    player_id: number;
-    season: number;
-    min: string;
-    fgm: number;
-    fga: number;
-    fg3m: number;
-    fg3a: number;
-    ftm: number;
-    fta: number;
-    oreb: number;
-    dreb: number;
-    reb: number;
-    ast: number;
-    stl: number;
-    blk: number;
-    turnover: number;
-    pf: number;
-    pts: number;
-    fg_pct: number;
-    fg3_pct: number;
-    ft_pct: number;
-  };
-  
+  games_played: number;
+  player_id: number;
+  season: number;
+  min: string;
+  fgm: number;
+  fga: number;
+  fg3m: number;
+  fg3a: number;
+  ftm: number;
+  fta: number;
+  oreb: number;
+  dreb: number;
+  reb: number;
+  ast: number;
+  stl: number;
+  blk: number;
+  turnover: number;
+  pf: number;
+  pts: number;
+  fg_pct: number;
+  fg3_pct: number;
+  ft_pct: number;
+};
 
 const Index = () => {
   const [player, setPlayer] = useState<IndividualPlayer | null>(null);
@@ -55,40 +56,40 @@ const Index = () => {
   const router = useRouter();
   const { playerId } = router.query;
   const teamColor = {
-ATL: '#C8102E',
-BOS: '#007A33',
-BKN: '#000000',
-CHA: '#1D1160',
-CHI: '#CE1141',
-CLE: '#860038',
-DAL: '#00538C',
-DEN: '#0E2240',
-DET: '#C8102E',
-GSW: '#1D428A',
-HOU: '#CE1141',
-IND: '#002D62',
-LAC: '#C8102E',
-LAL: '#552583',
-MEM: '#5D76A9',
-MIA: '#98002E',
-MIL: '#00471B',
-MIN: '#0C2340',
-NOP: '#85714D',
-NYK: '#F58426',
-OKC: '#007AC1',
-ORL: '#0077C0',
-PHI: '#006BB6',
-PHX: '#1D1160',
-POR: '#E03A3E',
-SAC: '#5A2D81',
-SAS: '#C4CED4',
-TOR: '#CE1141',
-UTA: '#002B5C',
-WAS: '#002B5C'
-  }
+    ATL: "#C8102E",
+    BOS: "#007A33",
+    BKN: "#000000",
+    CHA: "#1D1160",
+    CHI: "#CE1141",
+    CLE: "#860038",
+    DAL: "#00538C",
+    DEN: "#0E2240",
+    DET: "#C8102E",
+    GSW: "#1D428A",
+    HOU: "#CE1141",
+    IND: "#002D62",
+    LAC: "#C8102E",
+    LAL: "#552583",
+    MEM: "#5D76A9",
+    MIA: "#98002E",
+    MIL: "#00471B",
+    MIN: "#0C2340",
+    NOP: "#85714D",
+    NYK: "#F58426",
+    OKC: "#007AC1",
+    ORL: "#0077C0",
+    PHI: "#006BB6",
+    PHX: "#1D1160",
+    POR: "#E03A3E",
+    SAC: "#5A2D81",
+    SAS: "#C4CED4",
+    TOR: "#CE1141",
+    UTA: "#002B5C",
+    WAS: "#002B5C",
+  };
   useEffect(() => {
     const options = {
-      method: 'GET',
+      method: "GET",
       url: `https://www.balldontlie.io/api/v1/players/${playerId}`,
     };
 
@@ -96,6 +97,8 @@ WAS: '#002B5C'
       .request(options)
       .then(function (response) {
         console.log(response.data);
+        const playerData: IndividualPlayer = response.data;
+        playerData.teamLogo = playerData.team.logo;
         setPlayer(response.data);
       })
       .catch(function (error) {
@@ -138,34 +141,40 @@ WAS: '#002B5C'
       return <li className="my-4">HEIGHT: N/A</li>;
     }
   };
-  const teamAbbreviation = player?.team.abbreviation
-  const backgroundColor = teamColor[teamAbbreviation]
+  const teamAbbreviation = player?.team.abbreviation;
+  // console.log("logo", player?.team);
+
+  const gradientColor = `linear-gradient(to bottom, ${teamColor[teamAbbreviation]} 0%, rgba(0, 0, 0, 0) 130%)`;
 
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex items-center justify-center w-full h-full rounded-xl shadow-2xl">
       {player && (
-        <div className="flex flex-col w-1/2 border-2 rounded-md shadow-md h-1/2">
-        <div style={{
-          backgroundColor 
-        }}className="flex items-center justify-center text-lg font-bold text-white border-b rounded-t-md h-1/5">
-          {player.first_name + ' ' + player.last_name}
+        <div
+          className="flex flex-col w-1/2 border-2 rounded-xl shadow-2xl h-1/2"
+          style={{ background: gradientColor }}
+        >
+          <div className="flex items-center justify-center text-xl font-bold text-white border-b rounded-xl h-1/5 px-5 py-10">
+            {player.first_name + " " + player.last_name}
+            {player.team && (
+              <img
+                src={player.teamLogo}
+                alt={player.team.abbreviation}
+                className="w-10 h-10 mx-20 space-x-2"
+              />
+            )}
+          </div>
+          <div style={{ background: gradientColor }}>
+            <ul className="p-4 text-lg italic text-white justify-center items-center flex-col flex">
+              {showHeight()}
+              <li className="my-4">POSITION: {player.position ?? "N/A"}</li>
+              <li className="my-4">
+                TEAM: {player.team?.abbreviation ?? "N/A"}
+              </li>
+              <li>Points Per Game: {averagePts}</li>
+              <li>Games Played: {totalGames}</li>
+            </ul>
+          </div>
         </div>
-        <div>
-          <ul className="p-4 text-lg italic text-black">
-            {showHeight()}
-            <li className="my-4">POSITION: {player.position ?? 'N/A'}</li>
-            <li className="my-4">
-              TEAM: {player.team?.abbreviation ?? 'N/A'}
-            </li>
-            <li>
-                Points Per Game: {averagePts}
-            </li>
-            <li>
-                Games Played: {totalGames}
-            </li>
-          </ul>
-        </div>
-      </div>
       )}
     </div>
   );
