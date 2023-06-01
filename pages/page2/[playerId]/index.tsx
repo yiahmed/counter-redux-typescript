@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Card } from "@mui/material";
 import { useRouter } from "next/router";
-import { useAppSelector } from "@/hooks";
+import { useAppSelector } from "@/components/hooks";
 
 type IndividualPlayer = {
   teamLogo: string | undefined;
@@ -61,38 +61,38 @@ const Index = () => {
   );
   const router = useRouter();
   const { playerId } = router.query;
-  const teamColor = {
-    ATL: "#C8102E",
-    BOS: "#007A33",
-    BKN: "#000000",
-    CHA: "#1D1160",
-    CHI: "#CE1141",
-    CLE: "#860038",
-    DAL: "#00538C",
-    DEN: "#0E2240",
-    DET: "#C8102E",
-    GSW: "#1D428A",
-    HOU: "#CE1141",
-    IND: "#002D62",
-    LAC: "#C8102E",
-    LAL: "#552583",
-    MEM: "#5D76A9",
-    MIA: "#98002E",
-    MIL: "#00471B",
-    MIN: "#0C2340",
-    NOP: "#85714D",
-    NYK: "#F58426",
-    OKC: "#007AC1",
-    ORL: "#0077C0",
-    PHI: "#006BB6",
-    PHX: "#1D1160",
-    POR: "#E03A3E",
-    SAC: "#5A2D81",
-    SAS: "#C4CED4",
-    TOR: "#CE1141",
-    UTA: "#002B5C",
-    WAS: "#002B5C",
-  };
+  // const teamColor = {
+  //   ATL: "#C8102E",
+  //   BOS: "#007A33",
+  //   BKN: "#000000",
+  //   CHA: "#1D1160",
+  //   CHI: "#CE1141",
+  //   CLE: "#860038",
+  //   DAL: "#00538C",
+  //   DEN: "#0E2240",
+  //   DET: "#C8102E",
+  //   GSW: "#1D428A",
+  //   HOU: "#CE1141",
+  //   IND: "#002D62",
+  //   LAC: "#C8102E",
+  //   LAL: "#552583",
+  //   MEM: "#5D76A9",
+  //   MIA: "#98002E",
+  //   MIL: "#00471B",
+  //   MIN: "#0C2340",
+  //   NOP: "#85714D",
+  //   NYK: "#F58426",
+  //   OKC: "#007AC1",
+  //   ORL: "#0077C0",
+  //   PHI: "#006BB6",
+  //   PHX: "#1D1160",
+  //   POR: "#E03A3E",
+  //   SAC: "#5A2D81",
+  //   SAS: "#C4CED4",
+  //   TOR: "#CE1141",
+  //   UTA: "#002B5C",
+  //   WAS: "#002B5C",
+  // };
   useEffect(() => {
     const options = {
       method: "GET",
@@ -154,9 +154,16 @@ const Index = () => {
       return <li className="my-4">HEIGHT: N/A</li>;
     }
   };
+  const teamObj = Object.values(teamInfoFromRedux).find(
+    (teamData) => teamData.team_full_name === player?.team?.full_name
+  );
+
+  const teamLogo = teamObj ? teamObj.logo : "";
+  const teamColor = teamObj ? teamObj.color : "";
+
   const teamAbbreviation = player?.team.abbreviation;
 
-  const gradientColor = `linear-gradient(to bottom, ${teamColor[teamAbbreviation]} 0%, rgba(0, 0, 0, 0) 130%)`;
+  const gradientColor = `linear-gradient(to bottom, ${teamColor} 0%, rgba(0, 0, 0, 0) 130%)`;
 
   return (
     <div className="flex items-center justify-center w-full h-full rounded-xl shadow-2xl">
@@ -169,7 +176,7 @@ const Index = () => {
             {player.first_name + " " + player.last_name}
             {player.team && (
               <img
-                src={player.teamLogo}
+                src={teamLogo}
                 alt={player.team.abbreviation}
                 className="w-10 h-10 mx-20 space-x-2"
               />
