@@ -166,28 +166,34 @@ const Index = () => {
 
   const teamLogo = teamObj ? teamObj.logo : "";
   const teamColor = teamObj ? teamObj.color : "";
-  const gradientColor = `linear-gradient(to bottom, ${teamColor} 0%, rgba(0, 0, 0, 0) 130%)`;
+  const gradientColor = `linear-gradient(to bottom, ${teamColor} 20%, rgba(0, 0, 0, 0) 160%)`;
 
   return (
     <div className="flex items-center justify-center w-full h-full rounded-sm shadow-2xl">
       {player && (
-        <div className="flex flex-col w-1/2 border-2 rounded-xl shadow-2xl h 1/2  ">
+        <div className="flex flex-col w-1/2 border-2  shadow-2xl h 1/2  ">
           <div
-            style={{ background: teamColor }}
-            className={`flex items-center justify-center text-4xl font-bold ${fjalla_one.className} text-white  border-b rounded-xl h-1/5 px-5 py-2`}
+            style={{
+              background: gradientColor,
+            }}
+            className={`flex items-center text-4xl font-bold ${fjalla_one.className} text-white  border-b   h-1/5 px-7 py-4 rounded-t-xl`}
           >
-            {player.first_name + " " + player.last_name}
-            {player.team && (
-              <img
-                src={teamLogo}
-                alt={player.team.abbreviation}
-                className="w-20 h-20 mx-20 space-x-2 "
-              />
-            )}
+            <div className="w-2/3">
+              {player.first_name + " " + player.last_name}
+            </div>
+            <div className="w-1/3 ">
+              {player.team && (
+                <img
+                  src={teamLogo}
+                  alt={player.team.abbreviation}
+                  className="w-20 h-20 float-right"
+                />
+              )}
+            </div>
           </div>
-          <div style={{ background: gradientColor }}>
+          <div style={{ background: "white", color: "black" }}>
             <ul
-              className={`p-4 text-lg  text-white ${fjalla_one.className}  justify-center items-center flex-col flex`}
+              className={`p-4 text-lg  text-black ${fjalla_one.className}  justify-center items-center flex-col flex`}
             >
               {showHeight()}
               <li className="my-4">POSITION: {player.position ?? "N/A"}</li>
