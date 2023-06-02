@@ -19,7 +19,6 @@ const fjalla_one = Fjalla_One({
   weight: ["400"],
 });
 
-console.log("team card", fjalla_one);
 
 interface Game {
   id: number;
@@ -177,6 +176,11 @@ const TeamCards = () => {
   }, [games]);
 
   return (
+    <>
+    <div>
+      <Typography className={`text-white bg-black font-bold text-center h-20 py-3 mb-0 ${fjalla_one.className}`}
+ variant="h3">NBA POSTSEASON 2022/23</Typography>
+    </div>
     <Grid
       container
       spacing={3}
@@ -246,6 +250,7 @@ const TeamCards = () => {
         );
       })}
     </Grid>
+    </>
   );
 };
 
