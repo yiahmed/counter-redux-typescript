@@ -4,20 +4,28 @@ import Home from "../../pages/index";
 
 type Props = {};
 
+const buttonStyling = {
+  borderColor:"white", color:"white", transition: "all 0.2s ease-in-out",
+  "&:hover": {
+    borderColor: "white",
+    boxShadow: "0 5px 15px rgba(145, 92, 182, .4);"
+  },
+};
+
 const Navbar = (props: Props) => {
   return (
-    <div className="w-full bg-white border-2 shadow-md flex justify-center items-center">
+    <div className="w-full bg-black shadow-md flex justify-center items-center">
       <div className="py-2 space-x-5">
-        <Button variant="outlined" href={"/"}>
+        <Button variant="outlined" href={"/"} sx={buttonStyling}>
           Homey
         </Button>
-        <Button variant="outlined" href="/counter">
+        <Button variant="outlined" href="/counter" sx={buttonStyling}>
           Counter
         </Button>
-        <Button variant="outlined" href={"/page1"}>
-          Page1
+        <Button variant="outlined" href={"/page1"} sx={buttonStyling}>
+          Other page
         </Button>
-        <Button variant="outlined" href={"/page2"}>
+        <Button variant="outlined" href={"/page2"} sx={buttonStyling}>
           NBA Postseason 22/23
         </Button>
       </div>

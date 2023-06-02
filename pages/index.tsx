@@ -1,17 +1,9 @@
-import React from 'react';
-import TestPlayer from '@/components/shared/features/api-calls-components/PostSeasonPlayers';
-import PlayerData from '@/components/shared/features/api-calls-components/playerData';
-import PostSeasonPlayers from '@/components/shared/features/api-calls-components/PostSeasonPlayers';
+import React from "react";
 
 type Props = {};
 
 const Home = (props: Props) => {
-
-  return (
-    <div className='text-black'>
-      Home
-    </div>
-  );
+  return <div className="text-black">Home</div>;
 };
 
 export default Home;
