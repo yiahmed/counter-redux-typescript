@@ -197,13 +197,13 @@ const Index = () => {
             >
               {showHeight()}
               <li className="my-4">POSITION: {player.position ?? "N/A"}</li>
-              <li>Points Per Game: {averagePts}</li>
+              <li className="text-2xl">Points Per Game: {averagePts}</li>
               <br />
-              <li>Assists Per Game: {averageAst}</li>
+              <li className="text-2xl">Assists Per Game: {averageAst}</li>
               <br />
-              <li>Rebounds Per Game: {averageReb}</li>
+              <li className="text-2xl">Rebounds Per Game: {averageReb}</li>
               <br />
-              <li>Games Played: {totalGames}</li>
+              <li className="text-2xl">Games Played: {totalGames}</li>
             </ul>
           </div>
         </div>
