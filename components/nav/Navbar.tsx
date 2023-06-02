@@ -5,10 +5,12 @@ import Home from "../../pages/index";
 type Props = {};
 
 const buttonStyling = {
-  borderColor:"white", color:"white", transition: "all 0.2s ease-in-out",
+  borderColor: "white",
+  color: "white",
+  transition: "all 0.2s ease-in-out",
   "&:hover": {
     borderColor: "white",
-    boxShadow: "0 5px 15px rgba(145, 92, 182, .4);"
+    boxShadow: "0 5px 15px rgba(145, 92, 182, .4);",
   },
 };
 
@@ -17,7 +19,7 @@ const Navbar = (props: Props) => {
     <div className="w-full bg-black shadow-md flex justify-center items-center">
       <div className="py-2 space-x-5">
         <Button variant="outlined" href={"/"} sx={buttonStyling}>
-          Homey
+          Home
         </Button>
         <Button variant="outlined" href="/counter" sx={buttonStyling}>
           Counter
