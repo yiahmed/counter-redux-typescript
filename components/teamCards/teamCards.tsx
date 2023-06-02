@@ -10,6 +10,7 @@ import {
   CardContent,
   CardMedia,
   Typography,
+  Button,
 } from "@mui/material";
 
 import {Fjalla_One} from '@next/font/google'
@@ -387,9 +388,11 @@ const TeamCards = () => {
                 {teamPlayers.map((player: PlayerData) => (
                   <Typography component="div" key={player.id}>
                     <Link href={`/page2/${player.id}`} key={index}>
-                      <Card sx={{ display: "flex", borderRadius: 0 }}>
+                      <Card sx={{ display: "flex", borderRadius: 0}}>
+                        <Button sx={{display:"flex", color:"black", width: "100%", justifyContent:"left"}}>
                         <CardContent sx={{ minWidth: "4rem", color: "#AAAAAA", fontFamily: fjalla_one.style.fontFamily }}>{player.position}</CardContent>
-                        <CardContent>{player.first_name} {player.last_name}</CardContent>
+                        <CardContent sx={{fontFamily: "sans-serif", textTransform:"none"}}>{player.first_name} {player.last_name}</CardContent>
+                        </Button>
                       </Card>
                     </Link>
                   </Typography>
