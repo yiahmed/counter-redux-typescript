@@ -67,7 +67,7 @@ const Index = () => {
   );
   const router = useRouter();
   const { playerId } = router.query;
-  
+
   useEffect(() => {
     const options = {
       method: "GET",
@@ -140,7 +140,7 @@ const Index = () => {
   return (
     <div className="flex items-center justify-center w-full h-full rounded-sm shadow-2xl">
       {player && (
-        <div className="flex flex-col w-1/2 border-2  shadow-2xl h 1/2  ">
+        <div className="flex flex-col w-1/2   shadow-2xl h 1/2  ">
           <div
             style={{
               background: gradientColor,
