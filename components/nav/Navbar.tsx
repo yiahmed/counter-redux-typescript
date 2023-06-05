@@ -21,13 +21,13 @@ const Navbar = (props: Props) => {
         <Button variant="outlined" href={"/"} sx={buttonStyling}>
           Home
         </Button>
-        <Button variant="outlined" href="/counter" sx={buttonStyling}>
+        {/* <Button variant="outlined" href="/counter" sx={buttonStyling}>
           Counter
         </Button>
         <Button variant="outlined" href={"/page1"} sx={buttonStyling}>
           Other page
-        </Button>
-        <Button variant="outlined" href={"/page2"} sx={buttonStyling}>
+        </Button> */}
+        <Button variant="outlined" href={"/nba-postseason"} sx={buttonStyling}>
           NBA Postseason 22/23
         </Button>
       </div>
