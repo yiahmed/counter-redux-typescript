@@ -178,7 +178,8 @@ const TeamCards = () => {
   return (
     <>
     <div>
-      <Typography className={`text-white bg-black font-bold text-center h-20 py-3 mb-0 ${fjalla_one.className}`}
+      <Typography sx={{backgroundColor: 'black',textAlign:"center",color: 'white', borderRadius: 'md', fontFamily: fjalla_one.style.fontFamily,  paddingBottom:3}}
+      className={`text-white bg-black font-bold text-center h-20 py-3 mb-0 ${fjalla_one.className}`}
  variant="h3">NBA POSTSEASON 2022/23</Typography>
     </div>
     <Grid
@@ -212,20 +213,20 @@ const TeamCards = () => {
                   <Typography
                     component="div"
                     variant="h4"
-                    className={`text-white font-bold rounded-md ${fjalla_one.className}`}
+                    sx={{  color: 'white', borderRadius: 'md', fontFamily: fjalla_one.style.fontFamily}}
                   >
                     {team.toUpperCase()}
                   </Typography>
                   <Typography
                     component="div"
-                    className={`text-white font-bold rounded-md ${fjalla_one.className}`}
+                    sx={{  color: 'white', fontWeight: 'bold', borderRadius: 'md', fontFamily: fjalla_one.style.fontFamily}}
                   >
                     ({teamRecord.wins} - {teamRecord.losses})
                   </Typography>
                 </CardContent>
                 <CardMedia
                   component="img"
-                  className="h-20 w-20 object-fill p-1"
+                  sx={{height:"5rem",width:"5rem", objectFit:"fill",padding:"0.25rem"}}
                   image={logo}
                   alt="Team Logo"
                 />
