@@ -19,7 +19,6 @@ const fjalla_one = Fjalla_One({
   weight: ["400"],
 });
 
-
 interface Game {
   id: number;
   date: string;
@@ -177,79 +176,105 @@ const TeamCards = () => {
 
   return (
     <>
-    <div>
-      <Typography className={`text-white bg-black font-bold text-center h-20 py-3 mb-0 ${fjalla_one.className}`}
- variant="h3">NBA POSTSEASON 2022/23</Typography>
-    </div>
-    <Grid
-      container
-      spacing={3}
-      sx={{ justifyContent: "center", padding: "2rem" }}
-    >
-      {teamsArray.map((team: string, index: number) => {
-        // Get the team object from the teamLogos using the team name
-        const teamObj = Object.values(teamInfoFromRedux).find(
-          (teamData) => teamData.team_full_name === team
-        );
+      <div>
+        <Typography
+          className={`text-white bg-black font-bold text-center h-20 py-3 mb-0 ${fjalla_one.className}`}
+          variant="h3"
+        >
+          NBA POSTSEASON 2022/23
+        </Typography>
+      </div>
+      <Grid
+        container
+        spacing={3}
+        sx={{ justifyContent: "center", padding: "2rem" }}
+      >
+        {teamsArray.map((team: string, index: number) => {
+          // Get the team object from the teamLogos using the team name
+          const teamObj = Object.values(teamInfoFromRedux).find(
+            (teamData) => teamData.team_full_name === team
+          );
 
-        if (!teamObj) return null; // Skip if team object is not found
+          if (!teamObj) return null; // Skip if team object is not found
 
-        const { logo, color } = teamObj;
+          const { logo, color } = teamObj;
 
-        // Get the players for the current team
-        const teamPlayers = playersByTeam[teamObj.id] || [];
+          // Get the players for the current team
+          const teamPlayers = playersByTeam[teamObj.id] || [];
 
-        const teamRecord = teamRecords[team] || { wins: 0, losses: 0 };
+          const teamRecord = teamRecords[team] || { wins: 0, losses: 0 };
 
-        return (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card className="flex flex-col max-h-80">
-              <div
-                className="flex items-center justify-end p-2"
-                style={{ backgroundColor: color }}
-              >
-                <CardContent sx={{ padding: "10px" }} className="flex-1">
-                  <Typography
-                    component="div"
-                    variant="h4"
-                    className={`text-white font-bold rounded-md ${fjalla_one.className}`}
-                  >
-                    {team.toUpperCase()}
-                  </Typography>
-                  <Typography
-                    component="div"
-                    className={`text-white font-bold rounded-md ${fjalla_one.className}`}
-                  >
-                    ({teamRecord.wins} - {teamRecord.losses})
-                  </Typography>
-                </CardContent>
-                <CardMedia
-                  component="img"
-                  className="h-20 w-20 object-fill p-1"
-                  image={logo}
-                  alt="Team Logo"
-                />
-              </div>
+          return (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Card className="flex flex-col max-h-80">
+                <div
+                  className="flex items-center justify-end p-2"
+                  style={{ backgroundColor: color }}
+                >
+                  <CardContent sx={{ padding: "10px" }} className="flex-1">
+                    <Typography
+                      component="div"
+                      variant="h4"
+                      className={`text-white font-bold rounded-md ${fjalla_one.className}`}
+                    >
+                      {team.toUpperCase()}
+                    </Typography>
+                    <Typography
+                      component="div"
+                      className={`text-white font-bold rounded-md ${fjalla_one.className}`}
+                    >
+                      ({teamRecord.wins} - {teamRecord.losses})
+                    </Typography>
+                  </CardContent>
+                  <CardMedia
+                    component="img"
+                    className="h-20 w-20 object-fill p-1"
+                    image={logo}
+                    alt="Team Logo"
+                  />
+                </div>
 
-              <div className="flex-1 overflow-y-auto">
-                {teamPlayers.map((player: PlayerData) => (
-                  <Typography component="div" key={player.id}>
-                    <Link href={`/page2/${player.id}`} key={index}>
-                      <Card sx={{ display: "flex", borderRadius: 0}}>
-                        <Button sx={{display:"flex", color:"black", width: "100%", justifyContent:"left"}}>
-                        <CardContent sx={{ minWidth: "4rem", color: "#AAAAAA", fontFamily: fjalla_one.style.fontFamily }}>{player.position}</CardContent>
-                        <CardContent sx={{fontFamily: "sans-serif", textTransform:"none"}}>{player.first_name} {player.last_name}</CardContent>
-                        </Button>
-                      </Card>
-                    </Link>
-                  </Typography>
-                ))}
-              </div>
-            </Card>
-          </Grid>
-        );
-      })}
-    </Grid>
+                <div className="flex-1 overflow-y-auto">
+                  {teamPlayers.map((player: PlayerData) => (
+                    <Typography component="div" key={player.id}>
+                      <Link href={`/page2/${player.id}`} key={index}>
+                        <Card sx={{ display: "flex", borderRadius: 0 }}>
+                          <Button
+                            sx={{
+                              display: "flex",
+                              color: "black",
+                              width: "100%",
+                              justifyContent: "left",
+                            }}
+                          >
+                            <CardContent
+                              sx={{
+                                minWidth: "4rem",
+                                color: "#AAAAAA",
+                                fontFamily: fjalla_one.style.fontFamily,
+                              }}
+                            >
+                              {player.position}
+                            </CardContent>
+                            <CardContent
+                              sx={{
+                                fontFamily: "sans-serif",
+                                textTransform: "none",
+                              }}
+                            >
+                              {player.first_name} {player.last_name}
+                            </CardContent>
+                          </Button>
+                        </Card>
+                      </Link>
+                    </Typography>
+                  ))}
+                </div>
+              </Card>
+            </Grid>
+          );
+        })}
+      </Grid>
     </>
   );
 };

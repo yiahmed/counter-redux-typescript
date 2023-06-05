@@ -10,5 +10,5 @@ const Page2 = (props: Props) => {
     </div>
   );
 };
-//let's go NBA test 32323asdsad
+
 export default Page2;
