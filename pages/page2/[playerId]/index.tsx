@@ -193,17 +193,25 @@ const Index = () => {
           </div>
           <div style={{ background: "white", color: "black" }}>
             <ul
-              className={`p-4 text-lg  text-black ${fjalla_one.className}  justify-center items-center flex-col flex`}
+              className={`p-4 text-lg  text-black ${fjalla_one.className}  justify-center items-center flex-col flex `}
             >
               {showHeight()}
               <li className="my-4">POSITION: {player.position ?? "N/A"}</li>
-              <li className="text-2xl">Points Per Game: {averagePts}</li>
+              <li className="text-2xl animate-float">
+                Points Per Game: {averagePts}
+              </li>
               <br />
-              <li className="text-2xl">Assists Per Game: {averageAst}</li>
+              <li className="text-2xl animate-float">
+                Assists Per Game: {averageAst}
+              </li>
               <br />
-              <li className="text-2xl">Rebounds Per Game: {averageReb}</li>
+              <li className="text-2xl animate-float">
+                Rebounds Per Game: {averageReb}
+              </li>
               <br />
-              <li className="text-2xl">Games Played: {totalGames}</li>
+              <li className="text-2xl animate-float">
+                Games Played: {totalGames}
+              </li>
             </ul>
           </div>
         </div>
