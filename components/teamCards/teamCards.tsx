@@ -178,7 +178,19 @@ const TeamCards = () => {
     <>
       <div>
         <Typography
-          className={`text-white bg-black font-bold text-center h-20 py-3 mb-0 ${fjalla_one.className}`}
+sx={{
+  color: 'white',
+  backgroundColor: 'black',
+  textAlign: 'center',
+  paddingTop: 1,
+  paddingBottom: 1.5,
+fontFamily: fjalla_one.style.fontFamily,
+}}
+
+
+
+
+
           variant="h3"
         >
           NBA POSTSEASON 2022/23
@@ -252,19 +264,21 @@ const TeamCards = () => {
                   {teamPlayers.map((player: PlayerData) => (
                     <Typography component="div" key={player.id}>
                       <Link href={`/nba-postseason/${player.id}`} key={index}>
-                        <Card sx={{ display: "flex", borderRadius: 0 }}>
+                        <Card sx={{ display: "flex", borderRadius: 0, backgroundColor:"black" }}>
                           <Button
+                            
                             sx={{
                               display: "flex",
-                              color: "black",
+                              color: "white",
                               width: "100%",
                               justifyContent: "left",
+                              background: "#334155"
                             }}
                           >
                             <CardContent
                               sx={{
                                 minWidth: "4rem",
-                                color: "#AAAAAA",
+                                color: "#DDDDDD",
                                 fontFamily: fjalla_one.style.fontFamily,
                               }}
                             >
