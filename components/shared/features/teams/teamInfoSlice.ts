@@ -10,6 +10,8 @@ interface TeamInfo {
   };
 }
 
+
+
 export interface TeamState {
   teamInfo: TeamInfo[];
   status: "idle" | "loading" | "failed";

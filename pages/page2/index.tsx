@@ -1,13 +1,14 @@
-import TestData from '@/components/shared/features/api-calls-components/testData'
-import TeamCards from '@/components/teamCards/teamCards'
-import React from 'react'
+import TeamCards from "@/components/teamCards/teamCards";
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 const Page2 = (props: Props) => {
   return (
-    <div><TeamCards/></div>
-  )
-}
+    <div>
+      <TeamCards />
+    </div>
+  );
+};
 //let's go NBA test 32323asdsad
-export default Page2
+export default Page2;
