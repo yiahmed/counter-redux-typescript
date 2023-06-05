@@ -153,7 +153,7 @@ const Index = () => {
     if (player && player.height_feet && player.height_inches) {
       return (
         <li className="my-4">
-          HEIGHT: {player.height_feet}' {player.height_inches}"
+          HEIGHT: {player.height_feet} Feet {player.height_inches} Inches
         </li>
       );
     } else {
