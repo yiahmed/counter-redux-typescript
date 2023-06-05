@@ -251,7 +251,7 @@ const TeamCards = () => {
                 <div className="flex-1 overflow-y-auto">
                   {teamPlayers.map((player: PlayerData) => (
                     <Typography component="div" key={player.id}>
-                      <Link href={`/page2/${player.id}`} key={index}>
+                      <Link href={`/nba-postseason/${player.id}`} key={index}>
                         <Card sx={{ display: "flex", borderRadius: 0 }}>
                           <Button
                             sx={{
