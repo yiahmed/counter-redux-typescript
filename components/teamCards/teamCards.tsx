@@ -178,7 +178,14 @@ const TeamCards = () => {
     <>
       <div>
         <Typography
-          className={`text-white bg-black font-bold text-center h-20 py-3 mb-0 ${fjalla_one.className}`}
+          sx={{
+            color: "white",
+            backgroundColor: "black",
+            textAlign: "center",
+            paddingTop: 1,
+            paddingBottom: 1.5,
+            fontFamily: fjalla_one.style.fontFamily,
+          }}
           variant="h3"
         >
           NBA POSTSEASON 2022/23
