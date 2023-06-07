@@ -78,12 +78,13 @@ const TeamCards = (props: HighchartsReact.Props) => {
   const [teamRecords, setTeamRecords] = useState<{
     [key: string]: { wins: number; losses: number };
   }>({});
+
   const [options, setOptions] = useState<Highcharts.Options>({});
   const playersFromRedux = useAppSelector((state) => state.players.players);
   const teamInfoFromRedux = useAppSelector(
     (state) => state.teamInfo.teamInfo[0]
   );
-  console.log(teamInfoFromRedux);
+
   const playersByTeam: { [key: number]: PlayerData[] } = {};
   playersFromRedux.forEach((player: PlayerData) => {
     const { team_id } = player;

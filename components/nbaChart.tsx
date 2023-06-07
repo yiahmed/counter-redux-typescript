@@ -22,15 +22,17 @@ if (typeof Highcharts === "object") {
 const NbaChart = (props: Props) => {
   const { teamsArray, teamRecords } = props;
   const [options, setOptions] = useState<Highcharts.Options>({});
+  const [chartData, setChartData] = useState<ChartData[]>([]);
   const teamInfoFromRedux = useAppSelector(
     (state) => state.teamInfo.teamInfo[0]
   );
   useEffect(() => {
     const chartData = teamsArray.map((team) => ({
       name: team,
-      color: teamInfoFromRedux[team]?.color,
+      color: "#000000",
       y: teamRecords[team]?.wins || 0,
     }));
+    setChartData(chartData);
     console.log("chartdata", chartData);
     const options: Highcharts.Options = {
       chart: {
@@ -56,12 +58,12 @@ const NbaChart = (props: Props) => {
       ],
     };
 
-    Highcharts.setOptions({
-      colors: chartData.map((team) => team.color),
-    });
+    // Highcharts.setOptions({
+    //   colors: chartData.map((team) => team.color),
+    // });
 
     setOptions(options);
-  }, []);
+  }, [teamsArray, teamRecords]);
 
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
   return (
