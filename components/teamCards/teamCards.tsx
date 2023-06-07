@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import * as Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+import HighchartsExporting from "highcharts/modules/exporting";
+
 import axios from "axios";
 import Link from "next/link";
 import { useAppSelector, useAppDispatch } from "../hooks";
@@ -13,11 +17,22 @@ import {
 } from "@mui/material";
 
 import { Fjalla_One } from "@next/font/google";
+import NbaChart from "../nbaChart";
 
 const fjalla_one = Fjalla_One({
   subsets: ["latin"],
   weight: ["400"],
 });
+
+interface ChartData {
+  name: string;
+  color: string;
+  y: number;
+}
+
+// interface CustomPoint extends Highcharts.Point {
+//   value: number;
+// }
 
 interface Game {
   id: number;
@@ -53,12 +68,17 @@ type PlayerData = {
 
 let gameData: Game[] = [];
 
-const TeamCards = () => {
+if (typeof Highcharts === "object") {
+  HighchartsExporting(Highcharts);
+}
+
+const TeamCards = (props: HighchartsReact.Props) => {
   const [games, setGames] = useState<Game[] | null>(null); //????a game array or NULL, start w/ null
   const [teamsArray, setTeamsArray] = useState<string[]>([]);
   const [teamRecords, setTeamRecords] = useState<{
     [key: string]: { wins: number; losses: number };
   }>({});
+  const [options, setOptions] = useState<Highcharts.Options>({});
   const playersFromRedux = useAppSelector((state) => state.players.players);
   const teamInfoFromRedux = useAppSelector(
     (state) => state.teamInfo.teamInfo[0]
@@ -177,6 +197,7 @@ const TeamCards = () => {
   return (
     <>
       <div>
+        <NbaChart teamsArray={teamsArray} teamRecords={teamRecords} />
         <Typography
           sx={{
             color: "white",
