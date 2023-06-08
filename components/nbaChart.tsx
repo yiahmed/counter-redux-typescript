@@ -19,6 +19,22 @@ if (typeof Highcharts === "object") {
   HighchartsExporting(Highcharts);
 }
 
+function returnTeamAbbrev(teamName: string) {
+  const teams = [
+    'Philadelphia 76ers', 'Brooklyn Nets', 'Cleveland Cavaliers', 'New York Knicks', 'Sacramento Kings',
+    'Golden State Warriors', 'Phoenix Suns', 'LA Clippers', 'Boston Celtics', 'Atlanta Hawks',
+    'Memphis Grizzlies', 'Los Angeles Lakers', 'Milwaukee Bucks', 'Miami Heat', 'Denver Nuggets',
+    'Minnesota Timberwolves'
+  ];
+  
+  const abbreviations = [
+    'PHI', 'BKN', 'CLE', 'NYK', 'SAC', 'GSW', 'PHX', 'LAC', 'BOS', 'ATL', 'MEM', 'LAL', 'MIL', 'MIA', 'DEN', 'MIN'
+  ];
+  
+  const index = teams.indexOf(teamName);
+  return abbreviations[index];
+}
+
 const NbaChart = (props: Props) => {
   const { teamsArray, teamRecords } = props;
   const [options, setOptions] = useState<Highcharts.Options>({});
@@ -29,9 +45,11 @@ const NbaChart = (props: Props) => {
   useEffect(() => {
     const chartData = teamsArray.map((team) => ({
       name: team,
-      color: "#000000",
+      color: teamInfoFromRedux[`${returnTeamAbbrev(team)}`].color,
       y: teamRecords[team]?.wins || 0,
     }));
+    console.log("team info from redux", teamInfoFromRedux);
+    console.log("teamsArray", teamsArray);
     setChartData(chartData);
     console.log("chartdata", chartData);
     const options: Highcharts.Options = {
