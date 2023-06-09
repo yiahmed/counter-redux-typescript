@@ -92,19 +92,28 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    if (playerId) {
-      const statsToUse = useFetchPlayer(playerId) as any;
-      console.log("statsToUse", statsToUse);
-
-      //get promise results
-
-      // console.log("trss", statsToUse);
-      // setAveragePts(statsToUse.points);
-      // setAverageAst(statsToUse.asst);
-      // setAverageReb(statsToUse.reb);
-      // setTotalGames(statsToUse.games);
+    async function fetchData() {
+      if (playerId) {
+        try {
+          const statsToUse = await useFetchPlayer(playerId);
+          // console.log("statsToUse", statsToUse);
+  
+          //get promise results
+  
+          // console.log("trss", statsToUse);
+          setAveragePts(statsToUse.points);
+          setAverageAst(statsToUse.asst);
+          setAverageReb(statsToUse.reb);
+          setTotalGames(statsToUse.games);
+        } catch (error) {
+          console.error('Error fetching player data:', error);
+        }
+      }
     }
+  
+    fetchData();
   }, []);
+  
 
   const teamObj = Object.values(teamInfoFromRedux).find(
     (teamData) => teamData.team_full_name === player?.team?.full_name
@@ -122,7 +131,7 @@ const Index = () => {
             style={{
               background: gradientColor,
             }}
-            className={`flex items-center text-4xl font-bold ${fjalla_one.className} text-white  border-b   h-1/5 px-7 py-4 rounded-t-xl`}
+            className={`flex items-center text-4xl font-bold ${fjalla_one.className} text-white  border-b   h 1/5 px-7 py-4 rounded-t-xl`}
           >
             <div className="w-2/3">
               {player.first_name.toUpperCase() +
