@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { useAppSelector } from "@/components/hooks";
 import PlayerStat from "@/components/playerStat/PlayerStat";
 import { Fjalla_One } from "@next/font/google";
+import PlayerStatCardHeader from "@/components/Player/PlayerStatCardHeader";
+import useFetchPlayer from "@/components/hooks/useFetchPlayer";
 
 const fjalla_one = Fjalla_One({
   subsets: ["latin"],
@@ -90,43 +92,20 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://www.balldontlie.io/api/v1/stats?per_page=100&postseason=true&seasons[]=2022&player_ids[]=${playerId}`
-        );
-        const playerStats: PlayerStats[] = response.data.data;
-        console.log(response.data);
-        const filteredStats = playerStats.filter(
-          (stat) => stat.pts !== 0 || stat.reb !== 0 || stat.ast !== 0
-        );
-        const totalPts = filteredStats.reduce((sum, stat) => sum + stat.pts, 0);
-        const totalAst = filteredStats.reduce((sum, stat) => sum + stat.ast, 0);
-        const totalReb = filteredStats.reduce((sum, stat) => sum + stat.reb, 0);
-        const averagePoints = totalPts / filteredStats.length;
-        const averageAssists = totalAst / filteredStats.length;
-        const averageRebounds = totalReb / filteredStats.length;
-        setAveragePts(Math.round(averagePoints * 10) / 10);
-        setAverageAst(Math.round(averageAssists * 10) / 10);
-        setAverageReb(Math.round(averageRebounds * 10) / 10);
-        setTotalGames(filteredStats.length);
-        console.log("Average Points per Game:", averagePoints);
-        console.log("Total Games Played:", filteredStats.length);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    if (playerId) {
+      const statsToUse = useFetchPlayer(playerId) as any;
+      console.log("statsToUse", statsToUse);
 
-    fetchData();
+      //get promise results
+
+      // console.log("trss", statsToUse);
+      // setAveragePts(statsToUse.points);
+      // setAverageAst(statsToUse.asst);
+      // setAverageReb(statsToUse.reb);
+      // setTotalGames(statsToUse.games);
+    }
   }, []);
 
-  const showHeight = () => {
-    if (player && player.height_feet && player.height_inches) {
-      return `${player.height_feet}' ${player.height_inches}"`;
-    } else {
-      return "N/A";
-    }
-  };
   const teamObj = Object.values(teamInfoFromRedux).find(
     (teamData) => teamData.team_full_name === player?.team?.full_name
   );
@@ -161,30 +140,13 @@ const Index = () => {
             </div>
           </div>
           <div style={{ background: "white", color: "black" }}>
-            <div
-              className={`p-4 text-lg  text-black ${fjalla_one.className} justify-end flex-row flex`}
-            >
-              <div className="p-5 min-h-full w-1/2 ">
-                <div className="flex justify-center items-center ">
-                  <Image
-                    src="https://cdn.vectorstock.com/i/preview-1x/70/84/default-avatar-profile-icon-symbol-for-website-vector-46547084.jpg"
-                    alt="Profile"
-                    width={300} // Replace 300 with the desired width of the image
-                    height={200} // Replace 200 with the desired height of the image
-                  ></Image>
-                </div>
-              </div>
-              <div className="">
-                <PlayerStat label="HEIGHT" value={showHeight()} />
-                <PlayerStat label="POSITION" value={player.position ?? "N/A"} />
-                <PlayerStat label="POINTS PER GAME" value={averagePts} />
-              </div>
-              <div className="">
-                <PlayerStat label="ASSISTS PER GAME" value={averageAst} />
-                <PlayerStat label="REBOUNDS PER GAME" value={averageReb} />
-                <PlayerStat label="GAMES PLAYED" value={totalGames} />
-              </div>
-            </div>
+            <PlayerStatCardHeader
+              player={player}
+              points={averagePts}
+              asst={averageAst}
+              reb={averageReb}
+              games={totalGames}
+            />
           </div>
         </div>
       )}
