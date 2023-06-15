@@ -138,7 +138,7 @@ const Index = () => {
   return (
     <div className="flex items-center justify-center w-full h-full rounded-sm shadow-2xl">
       {player && (
-        <div className="flex flex-col w-1/2   shadow-2xl h 1/2  ">
+        <div className="flex flex-col sm:w-1/2 px-7 md:w-full md:px-4 lg:w-1/2 lg:px-0  shadow-2xl h 1/2  ">
           <div
             style={{
               background: gradientColor,
@@ -164,14 +164,15 @@ const Index = () => {
             <div
               className={`p-4 text-lg  text-black ${fjalla_one.className} justify-end flex-row flex`}
             >
-              <div className="p-5 min-h-full w-1/2 ">
-                <div className="flex justify-center items-center ">
+              <div className="p-5 min-h-full w-1/2">
+                <div className="flex justify-center items-center">
                   <Image
                     src="https://cdn.vectorstock.com/i/preview-1x/70/84/default-avatar-profile-icon-symbol-for-website-vector-46547084.jpg"
                     alt="Profile"
-                    width={300} // Replace 300 with the desired width of the image
-                    height={200} // Replace 200 with the desired height of the image
-                  ></Image>
+                    object-fit="cover"
+                    width={400}
+                    height={400}
+                  />
                 </div>
               </div>
               <div className="">
