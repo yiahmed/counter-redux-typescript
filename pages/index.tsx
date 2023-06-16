@@ -42,7 +42,7 @@ export default function MultiActionAreaCard() {
           display: "flex",
           justifyContent: "center",
           padding: "16px",
-          boxShadow: "20px 20px 30px rgba(0, 0, 0, 0.1)",
+          boxShadow: "20px 20px 0px rgba(0, 0, 0, 0.1)",
         }}
       >
         <Icon
