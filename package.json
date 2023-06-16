@@ -9,12 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.0",
+    "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.13.1",
+    "@mui/material": "^5.13.5",
     "@next/font": "^13.4.4",
     "@reduxjs/toolkit": "^1.9.5",
-    "@types/node": "20.2.1",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
@@ -30,11 +29,16 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-redux": "^8.0.5",
-    "tailwindcss": "3.3.2",
-    "typescript": "5.0.4"
+    "react-svg": "^16.1.16",
+    "tailwindcss": "3.3.2"
   },
   "devDependencies": {
+    "@iconify/react": "^4.1.0",
+    "@svgr/webpack": "^8.0.1",
     "@tailwindcss/typography": "^0.5.9",
-    "@types/highcharts": "^7.0.0"
+    "@types/highcharts": "^7.0.0",
+    "@types/node": "20.3.1",
+    "svg-url-loader": "^8.0.0",
+    "typescript": "5.1.3"
   }
 }
