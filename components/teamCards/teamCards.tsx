@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 
 import { Fjalla_One } from "@next/font/google";
+import { useGetAllPostseasonGamesQuery } from "../shared/features/api";
 
 const fjalla_one = Fjalla_One({
   subsets: ["latin"],
@@ -64,6 +65,7 @@ const TeamCards = () => {
     (state) => state.teamInfo.teamInfo[0]
   );
   console.log(teamInfoFromRedux);
+
   const playersByTeam: { [key: number]: PlayerData[] } = {};
   playersFromRedux.forEach((player: PlayerData) => {
     const { team_id } = player;
@@ -123,29 +125,39 @@ const TeamCards = () => {
     }
     return null; // Team not found
   };
-
+  const { data, isLoading } = useGetAllPostseasonGamesQuery();
+  console.log(data);
   useEffect(() => {
-    const fetchGameData = async () => {
-      try {
-        const response = await axios.get(
-          "https://www.balldontlie.io/api/v1/games",
-          {
-            params: {
-              per_page: "100",
-              "seasons[]": "2022",
-              postseason: "true",
-            },
-          }
-        );
-        const gameData: Game[] = response.data.data;
-        setGames(gameData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    if (!isLoading) {
+      setGames(data.data);
+    }
+  }, [isLoading]);
 
-    fetchGameData();
-  }, []);
+  // console.log(games);
+
+  // useEffect(() => {
+  //   const fetchGameData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         "https://www.balldontlie.io/api/v1/games",
+  //         {
+  //           params: {
+  //             per_page: "100",
+  //             "seasons[]": "2022",
+  //             postseason: "true",
+  //           },
+  //         }
+  //       );
+  //       const gameData: Game[] = response.data.data;
+  //       console.log("axiosGames", gameData);
+  //       setGames(gameData);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+
+  //   fetchGameData();
+  // }, []);
 
   useEffect(() => {
     if (games) {

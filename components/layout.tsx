@@ -1,8 +1,10 @@
 import { useAppSelector, useAppDispatch } from "./hooks";
 import { addPlayers } from "./shared/features/players/playerSlice";
 import Navbar from "./nav/Navbar";
-import React , { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useGetAllPostseasonStatsQuery } from "./shared/features/ballDontLieEndpoints";
+import { data } from "autoprefixer";
 
 type Player = {
   id: number;
@@ -65,65 +67,36 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const [players, setPlayers] = useState<Player[] | null>(null);
   const [postSeasonPlayers, setPostSeasonPlayers] = useState<PlayerData[]>([]);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+  const {
+    data: playersJSON,
+    isError,
+    isLoading,
+  } = useGetAllPostseasonStatsQuery(1);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const requests = [];
-      const options = {
-        method: "GET",
-        url: "https://www.balldontlie.io/api/v1/stats",
-        params: {
-          "seasons[]": ["2022", "2023"],
-          postseason: "true",
-          per_page: "100",
+    if (!isLoading && playersJSON && playersJSON.data) {
+      const uniqueIds: { [key: number]: boolean } = {};
+      const uniquePlayers = playersJSON.data.reduce(
+        (acc: Player[], player: Player) => {
+          if (!uniqueIds[player.player.id]) {
+            uniqueIds[player.player.id] = true;
+            acc.push(player);
+          }
+          return acc;
         },
-      };
+        []
+      );
 
-      const responses: Player[] = [];
-      for (let page = 1; page <= 24; page++) {
-        const request = axios.request({
-          ...options,
-          params: { ...options.params, page },
-        });
-        requests.push(request);
-      }
+      const uniquePlayerData = uniquePlayers.map(
+        (playerData) => playerData.player
+      );
 
-      try {
-        const results = await axios.all(requests);
-        results.forEach((response) => {
-          responses.push(...response.data.data);
-        });
-
-        setPlayers(responses);
-
-        const uniqueIds: { [key: number]: boolean } = {};
-        const uniquePlayers = responses.reduce(
-          (acc: Player[], player: Player) => {
-            if (!uniqueIds[player.player.id]) {
-              uniqueIds[player.player.id] = true;
-              acc.push(player);
-            }
-            return acc;
-          },
-          []
-        );
-
-        const uniquePlayerData = uniquePlayers.map(
-          (playerData) => playerData.player
-        );
-        // console.log(uniquePlayers); // Log the unique players
-        // console.log(uniquePlayerData);
-
-        setPostSeasonPlayers(uniquePlayerData);
-        dispatch(addPlayers(uniquePlayerData))
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
+      setPlayers(uniquePlayers);
+      setPostSeasonPlayers(uniquePlayerData);
+      dispatch(addPlayers(uniquePlayerData));
+    }
+  }, [isLoading, isError, playersJSON]);
 
   // console.log(postSeasonPlayers);
   console.log("redux", playersFromRedux);
@@ -131,8 +104,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="h-screen w-screen bg-white">
       <Navbar />
-      <main style={{height: "92%",
-      overflow: "auto"}}>{children}</main>
+      <main style={{ height: "92%", overflow: "auto" }}>{children}</main>
     </div>
   );
 }
