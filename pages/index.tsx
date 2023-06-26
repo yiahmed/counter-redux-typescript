@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import Head from "next/head";
 import Button from "@mui/material/Button";
 
 export default function MultiActionAreaCard() {
@@ -52,21 +51,6 @@ export default function MultiActionAreaCard() {
         }}
       >
         <Icon icon="fluent-emoji:basketball" style={{ fontSize: "50px" }} />
-        {!user && (
-          <div className="mx-4">
-            <Button variant="contained" href="/api/auth/login">
-              <Typography>Login</Typography>
-            </Button>
-          </div>
-        )}
-        {user && (
-          <div className="text-black mx-4">
-            <span className="mx-4 text-2xl">Welcome {user.name}!</span>
-            <Button variant="contained" href="/api/auth/logout">
-              <Typography>Logout</Typography>
-            </Button>
-          </div>
-        )}
       </div>
     </div>
   );
