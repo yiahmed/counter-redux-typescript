@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -31,7 +31,7 @@ export default function MultiActionAreaCard() {
             </Typography>
             <Typography variant="body2" color="text.secondary">
               The Crowds are up, their hands are down. Welcome to where the
-              numbers matters now = NBA Post Season 22/23
+              numbers matter now = NBA Post Season 22/23
             </Typography>
           </CardContent>
         </CardActionArea>
