@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 
 import { Fjalla_One } from "@next/font/google";
+import { useGetAllPostseasonGamesQuery } from "../shared/features/apiSliceGames";
 
 const fjalla_one = Fjalla_One({
   subsets: ["latin"],
@@ -169,6 +170,8 @@ const TeamCards = () => {
       setTeamsArray(uniqueTeams);
     }
   }, [games]); //[games] array is provided as the second argument. By doing this, you're telling React that the effect should run whenever the games state changes
+
+  // const { data } = useGetAllPostseasonGamesQuery()
 
   useEffect(() => {
     calculateTeamRecords();

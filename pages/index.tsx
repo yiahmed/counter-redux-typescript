@@ -5,13 +5,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { Icon } from "@iconify/react";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import Button from "@mui/material/Button";
 
 export default function MultiActionAreaCard() {
-  const { user, error, isLoading } = useUser();
-  console.log(user);
-
   return (
     <div
       style={{
