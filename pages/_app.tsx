@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { store } from "@/components/store";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import { gamesApi } from "@/components/shared/features/apiSliceGames";
+// FIXME: configure store to be compatible with rtk query and APIprovider
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
